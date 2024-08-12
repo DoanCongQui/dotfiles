@@ -7,6 +7,9 @@ Screenshots
 import XMonad
 import XMonad.Util.SpawnOnce
 
+colorTrayer :: String
+colorTrayer = "--tint 0x282c34"
+
 main = xmonad $ def
     { startupHook = myStartupHook }
 
