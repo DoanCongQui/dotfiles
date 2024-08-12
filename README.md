@@ -3,7 +3,7 @@ Screenshots
 ![Screenshot](.screenshots/xmonad.png?raw=true "Bussy")
 
 
-'''
+```
 import XMonad
 import XMonad.Util.SpawnOnce
 
@@ -15,4 +15,4 @@ myStartupHook = do
     spawnOnce "volumeicon &"
     spawnOnce "nm-applet &"
 
-'''
+```
