@@ -11,7 +11,7 @@ main = xmonad $ def
     { startupHook = myStartupHook }
 
 myStartupHook = do
-    spawnOnce "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --transparent true --alpha 0 --tint 0x000000 --height 24 &"
+    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 " ++ colorTrayer ++ " --height 22 &"
     spawnOnce "volumeicon &"
     spawnOnce "nm-applet &"
 
