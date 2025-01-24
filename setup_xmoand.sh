@@ -25,7 +25,8 @@ source ~/.bashrc
 sudo apt install haskell-stack -y
 stack upgrade
 cd ~/.config/xmonad
-stack init && stack upgrade
+stack init
+stack upgrade
 stack install 
 
 sudo apt install xmonad xmobar
