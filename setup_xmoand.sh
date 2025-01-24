@@ -26,4 +26,9 @@ cd ~/.config/xmonad
 stack init && stack upgrade
 stack install 
 
+cp .xmonad/xmonad.hs ~/.config/xmonad 
+cp -r .xmonad/lib ~/.config/xmonad 
+cp -r .fonts ~/
+cp -r .config/xmobar ~/.config
+
 
