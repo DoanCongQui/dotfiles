@@ -21,16 +21,17 @@ EOF
 # Apply changes immediately
 source ~/.bashrc
 
-sudo apt install haskell-stack xmobar -y
+sudo apt install haskell-stack -y
 stack upgrade
 cd ~/.config/xmonad
 stack init && stack upgrade
 stack install 
 
+sudo apt install xmonad xmobar
 cp .xmonad/xmonad.hs ~/.config/xmonad 
 cp -r .xmonad/lib ~/.config/xmonad 
 cp -r .fonts ~/
 cp -r .config/xmobar ~/.config
 cp .git ~/
-
+xmonad --recompile
 
