@@ -30,5 +30,6 @@ cp .xmonad/xmonad.hs ~/.config/xmonad
 cp -r .xmonad/lib ~/.config/xmonad 
 cp -r .fonts ~/
 cp -r .config/xmobar ~/.config
+cp .git ~/
 
 
