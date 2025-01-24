@@ -8,6 +8,12 @@ mkdir -p ~/.config/xmonad && cd ~/.config/xmonad
 cd ~/.config/xmonad
 git clone https://github.com/xmonad/xmonad
 git clone https://github.com/xmonad/xmonad-contrib
+sudo apt install haskell-stack -y
+stack upgrade
+cd ~/.config/xmonad
+stack init
+stack upgrade
+stack install 
 
 # Edit bashrc
 cat << 'EOF' | tee -a ~/.bashrc
@@ -22,18 +28,11 @@ EOF
 # Apply changes immediately
 source ~/.bashrc
 
-sudo apt install haskell-stack -y
-stack upgrade
-cd ~/.config/xmonad
-stack init
-stack upgrade
-stack install 
-
-sudo apt install xmonad xmobar
+sudo apt install xmonad xmobar -y
 cp .xmonad/xmonad.hs ~/.config/xmonad 
 cp -r .xmonad/lib ~/.config/xmonad 
 cp -r .fonts ~/
 cp -r .config/xmobar ~/.config
 cp .git ~/
-xmonad --recompile
+
 
