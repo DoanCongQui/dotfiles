@@ -6,6 +6,7 @@ sudo apt update -y && sudo apt upgrade -y
 sudo apt install git libx11-dev libxft-dev libxinerama-dev libxrandr-dev libxss-dev g++ -y
 git clone https://github.com/xmonad/xmonad
 git clone https://github.com/xmonad/xmonad-contrib
+mkdir -p ~/.config/xmonad && cd ~/.config/xmonad
 
 # Edit bashrc
 cat << 'EOF' | tee -a ~/.bashrc
