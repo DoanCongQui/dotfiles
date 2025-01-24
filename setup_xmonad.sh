@@ -28,11 +28,6 @@ EOF
 # Apply changes immediately
 source ~/.bashrc
 
-sudo apt install xmonad xmobar -y
-cp .xmonad/xmonad.hs ~/.config/xmonad 
-cp -r .xmonad/lib ~/.config/xmonad 
-cp -r .fonts ~/
-cp -r .config/xmobar ~/.config
-cp .git ~/
+sudo apt install xmonad xmobar lxappearance curl -y
 
 
