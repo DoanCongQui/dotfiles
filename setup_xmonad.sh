@@ -28,6 +28,6 @@ EOF
 # Apply changes immediately
 source ~/.bashrc
 
-sudo apt install xmonad xmobar lxappearance curl xdotool-y
+sudo apt install xmonad xmobar lxappearance curl xdotool sudo apt install pasystray traye feh -y
 
 
