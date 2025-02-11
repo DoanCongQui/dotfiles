@@ -124,27 +124,22 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook :: X ()
 myStartupHook = do
   spawn "killall trayer"  -- kill current trayer on each restart
-  -- spawnOnce "lxsession"
-  spawnOnce "picom"
-  spawnOnce "nm-applet &"
-  -- spawnOnce "volumeicon &"
-  spawnOnce "pasystray &"
-  spawnOnce "xsetroot -cursor_name left_ptr"
-  spawn "xinput set-prop 'DELL0B25:00 06CB:CE26 Touchpad' 'libinput Tapping Enabled' 1"
-  spawn "xinput set-prop 'DELL0B25:00 06CB:CE26 Touchpad' 'libinput Natural Scrolling Enabled' 1"
-
-  spawn ("sleep 1 && trayer --edge top --align right --widthtype request --padding 2 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 " ++ colorTrayer ++ " --height 22")
+  spawnOnce "picom" -- picom terminal & vscode
+  spawnOnce "nm-applet &" -- status icon networking
+  spawnOnce "pasystray &" -- status icon volume
+  spawn ("sleep 1 && trayer --edge bottom --align right --distancefrom right --transparent true --padding 25 --iconspacing 5 --alpha 230") -- trayer status 
 
   -- Select only =ONE= of the following four ways to set the wallpaper.
   spawnOnce "xargs xwallpaper --stretch < ~/.cache/wall"
-  spawnOnce "nitrogen --restore &"   -- if you prefer nitrogen to feh
+  -- spawnOnce "nitrogen --restore &"   -- if you prefer nitrogen to feh
+  spawnOnce "xsetroot -cursor_name left_ptr" -- click on StatusBar
+  spawnOnce "~/.config/xmonad/script/touchpad.sh" -- setup touchpad
+  spawnOnce "feh --bg-scale /home/dq/Pictures/backgrounds/jj_dark_by_Hiking93.jpg" -- setup backgrounds
+  
+  -- HDMI monitor
+  spawnOnce "xrandr --output HDMI-1 --primary --mode 1920x1080 --rate 100 --right-of eDP-1"
+  -- spawnOnce "xrandr --output eDP-1 --primary --mode 1920x1080 --left-of HDMI-1"
 
-  -- | --> picom <-- |
-  -- spawnOnce "picom &"
-
-  -- HDMI
-  -- spawnOnce "xrandr --output HDMI-1 --primary --mode 1366x768 --right-of eDP-1"
-  spawnOnce "xrandr --output eDP-1 --primary --mode 1920x1080 --left-of HDMI-1"
 myNavigation :: TwoD a (Maybe a)
 myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
  where navKeyMap = M.fromList [
@@ -444,7 +439,7 @@ myLayoutHook = avoidStruts
 
 
 -- myWorkspaces = [" Web ", " term ", " dev ", " File ", " Chat ", " Vbox "]
-myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 "]
+myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
