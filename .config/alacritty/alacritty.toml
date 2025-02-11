@@ -44,7 +44,7 @@ cyan = "#34E2E2"      # Light cyan
 white = "#EEEEEC"     # Light white
 
 [colors.cursor]
-cursor = "#528bff"    # Cursor màu xanh lam (giữ nguyên)
+cursor = "#528bff"
 text = "CellBackground"
 
 [colors.normal]
@@ -60,9 +60,9 @@ white = "#D3D7CF"     # Dark white
 [colors.primary]
 background = "#300924" # Màu nền
 foreground = "#FFFFFF" # Màu văn bản
-
+#
 [colors.selection]
-background = "#3e4451" # Màu nền của phần được chọn (giữ nguyên)
+background = "#3e4451"
 text = "CellForeground"
 
 [env]
@@ -190,5 +190,5 @@ general = "Alacritty"
 instance = "Alacritty"
 
 [window.padding]
-x = 1
-y = 1
+x = 5
+y = 5
