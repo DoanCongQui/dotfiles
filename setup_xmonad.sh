@@ -32,6 +32,11 @@ EOF
 # Apply changes immediately
 source ~/.bashrc
 
-sudo apt install xmonad xmobar lxappearance curl xdotool pasystray trayer feh dmenu pcmanfm -y
+cd "$(dirname "$0")"
+cp .config/* ~/.config/
+
+sudo apt install xmonad xmobar lxappearance curl xdotool pasystray trayer feh dmenu pcmanfm picom tree -y
+
+xmonad --recompile
 
 
