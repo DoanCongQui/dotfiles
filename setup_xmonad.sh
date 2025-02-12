@@ -36,6 +36,13 @@ cp .config/* ~/.config/
 
 sudo apt install xmonad xmobar lxappearance curl xdotool pasystray trayer feh dmenu pcmanfm picom tree -y
 
+echo "=============="
+echo "Install alacritty"
+echo "=============="
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.bashrc
+cargo install alacritty
+
 xmonad --recompile
 
 
