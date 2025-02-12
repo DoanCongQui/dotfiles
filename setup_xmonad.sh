@@ -13,6 +13,10 @@ stack upgrade
 cd ~/.config/xmonad
 stack init
 stack upgrade
+
+echo "=============="
+echo "Install Stack"
+echo "=============="
 stack install 
 
 # Edit bashrc
