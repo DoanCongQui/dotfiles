@@ -32,7 +32,6 @@ EOF
 # Apply changes immediately
 source ~/.bashrc
 
-cd "$(dirname "$0")"
 cp .config/* ~/.config/
 
 sudo apt install xmonad xmobar lxappearance curl xdotool pasystray trayer feh dmenu pcmanfm picom tree -y
