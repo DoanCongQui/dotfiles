@@ -17,6 +17,8 @@ stack upgrade
 echo "=============="
 echo "Install Stack"
 echo "=============="
+
+exec bash 
 stack install 
 
 # Edit bashrc
