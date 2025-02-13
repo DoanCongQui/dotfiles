@@ -32,7 +32,7 @@ EOF
 # Apply changes immediately
 source ~/.bashrc
 
-cp .config/* ~/.config/
+cp .config/* ~/.config/ -r
 
 sudo apt install xmonad xmobar lxappearance curl xdotool pasystray trayer feh dmenu pcmanfm picom tree -y
 
