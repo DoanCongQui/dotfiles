@@ -1,69 +1,5 @@
-[colors]
-draw_bold_text_with_bright_colors = true
-
-# [colors.bright]
-# black = "#5b6268"
-# blue = "#3071db"
-# cyan = "#46d9ff"
-# green = "#4db5bd"
-# magenta = "#a9a1e1"
-# red = "#da8548"
-# white = "#dfdfdf"
-# yellow = "#ecbe7b"
-#
-# [colors.cursor]
-# cursor = "#528bff"
-# text = "CellBackground"
-#
-# [colors.normal]
-# black = "#1c1f24"
-# blue = "#51afef"
-# cyan = "#5699af"
-# green = "#98be65"
-# magenta = "#c678dd"
-# red = "#ff6c6b"
-# white = "#abb2bf"
-# yellow = "#da8548"
-#
-# [colors.primary]
-# background = "#300924"
-# foreground = "#FFFFFF"
-#
-# [colors.selection]
-# background = "#3e4451"
-# text = "CellForeground"
-
-[colors.bright]
-black = "#555753"     # Light black
-red = "#EF2929"       # Light red
-green = "#8AE234"     # Light green
-yellow = "#FCE94F"    # Light yellow
-blue = "#729FCF"      # Light blue
-magenta = "#AD7FA8"   # Light purple
-cyan = "#34E2E2"      # Light cyan
-white = "#EEEEEC"     # Light white
-
-[colors.cursor]
-cursor = "#528bff"
-text = "CellBackground"
-
-[colors.normal]
-black = "#2E3436"     # Dark black
-red = "#CC0000"       # Dark red
-green = "#4E9A06"     # Dark green
-yellow = "#C4A000"    # Dark yellow
-blue = "#3465A4"      # Dark blue
-magenta = "#75507B"   # Dark purple
-cyan = "#06989A"      # Dark cyan
-white = "#D3D7CF"     # Dark white
-
-[colors.primary]
-background = "#300924" # Màu nền
-foreground = "#FFFFFF" # Màu văn bản
-#
-[colors.selection]
-background = "#3e4451"
-text = "CellForeground"
+[general]
+import = ["~/.config/alacritty/themes/themes/doom_one.toml"]
 
 [env]
 TERM = "xterm-256color"
@@ -72,19 +8,19 @@ TERM = "xterm-256color"
 size = 12.0
 
 [font.bold]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrains Mono Nerd Font"
 style = "Bold"
 
 [font.bold_italic]
-family = "JetBrains Nerd Font"
+family = "JetBrains Mono Nerd Font"
 style = "Bold Italic"
 
 [font.italic]
-family = "JetBrains Nerd Font"
+family = "JetBrains Mono Nerd Font"
 style = "Italic"
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrains Mono Nerd Font"
 style = "Regular"
 
 [font.offset]
@@ -179,10 +115,8 @@ mods = "Shift"
 history = 5000
 
 [window]
-dynamic_padding = true
-opacity = 1
-# dynamic_padding = false
-decorations = "none"
+dynamic_padding = false
+opacity = 0.8
 title = "Alacritty"
 
 [window.class]
@@ -190,5 +124,6 @@ general = "Alacritty"
 instance = "Alacritty"
 
 [window.padding]
-x = 5
-y = 5
+x = 6
+y = 6
+
