@@ -120,3 +120,7 @@ copy_dir "../.config/alacritty" "$HOME/.config/alacritty" || exit 1
 run_step "Install lxappearance" sudo apt install pcmanfm lxappearance dmenu pavucontrol picom -y
 
 copy_dir "../.config/picom" "$HOME/.config/picom" || exit 1
+
+# ------------- Install Brave ----------------
+run_step "Installing Brave" bash -c \
+  "curl -fsS https://dl.brave.com/install.sh | sh -s -- -y"
