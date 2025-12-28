@@ -22,22 +22,22 @@
           }
       },
     // Python
-      "python.pythonPath": "/home/dq/filesystem/python/pyright_setup.sh",
-      "pyright": {
-        "command": "pyright-langserver",
-        "args": ["--stdio"],
-        "filetypes": ["python"],
-        "trace.server": "verbose",
-        "settings": {
-          "python": {
-            "analysis": {
-              "diagnosticMode": "workspace",
-              "typeCheckingMode": "basic",
-              "logLevel": "Information"
-            }
-          }
-        }
-      },   
+      // "python.pythonPath": "/home/dq/use_conda_python.sh",
+      // "pyright": {
+      //   "command": "pyright-langserver",
+      //   "args": ["--stdio"],
+      //   "filetypes": ["python"],
+      //   "trace.server": "verbose",
+      //   "settings": {
+      //     "python": {
+      //       "analysis": {
+      //         "diagnosticMode": "workspace",
+      //         "typeCheckingMode": "basic",
+      //         "logLevel": "Information"
+      //       }
+      //     }
+      //   }
+      // },
     // Cmake 
       "cmake": {
           "command": "cmake-language-server",
