@@ -33,7 +33,7 @@ import colors
 
 mod = "mod4"              # Sets mod key to SUPER/WINDOWS
 myTerm = "alacritty"      # My terminal of choice
-myBrowser = "brave"       # My browser of choice
+myBrowser = "brave-browser"       # My browser of choice
 myEmacs = "emacsclient -c -a 'emacs' " # The space at the end is IMPORTANT!
 
 # Allows you to input a name when adding treetab section.
@@ -105,6 +105,10 @@ keys = [
         lazy.layout.section_up().when(layout=["treetab"]),
         desc="Move window downup/move up a section in treetab"
     ),
+
+    # Screenshot
+    Key([mod, "shift"], "s", lazy.spawn("flameshot gui"), 
+        desc="Screenshot selection to clipboard"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -184,12 +188,12 @@ groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
 # Uncomment only one of the following lines
-#group_labels = ["⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", ]
+group_labels = ["⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", ]
 #group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-group_labels = ["DEV", "WWW", "SYS", "DOC", "VBOX", "CHAT", "MUS", "VID", "GFX", "MISC"]
+#  group_labels = ["DEV", "WWW", "SYS", "DOC", "VBOX", "CHAT", "MUS", "VID", "GFX", "MISC"]
 
 # The default layout for each of the 10 workspaces
-group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall"]
+group_layouts = ["tile", "monadtall", "monadtall", "monadtall", "monadtall", "tile", "monadtall", "monadtall", "monadtall", "monadtall"]
 
 for i in range(len(group_names)):
     groups.append(
@@ -313,6 +317,7 @@ def init_widgets_list():
                  progs = [("🦁", "brave-browser", "Brave web browser"),
                           ("🚀", "alacritty", "Alacritty terminal"),
                           ("📁", "pcmanfm", "PCManFM file manager"),
+                          ("🔊", "pavucontrol", "Pavucontrol Volume"),
                           ("🎸", "vlc", "VLC media player")
                          ], 
                  fontsize = 12,
@@ -342,25 +347,30 @@ def init_widgets_list():
                  padding = 8,
                  max_chars = 40
                  ),
+        widget.Image(
+                filename="~/.config/qtile/icons/em.jpg",
+                scale=True,
+                ),
         widget.GenPollText(
                  update_interval = 300,
                  func = lambda: subprocess.check_output("printf $(uname -r)", shell=True, text=True),
                  foreground = colors[3],
                  padding = 8, 
-                 fmt = '{}',
+                 #  fmt = '🐧 {}',
+                 fmt = ' {}',
                  ),
         widget.CPU(
                  foreground = colors[4],
                  padding = 8, 
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
-                 format = 'Cpu: {load_percent}%',
+                 format = '🖥️ Cpu: {load_percent}%',
                  ),
         widget.Memory(
                  foreground = colors[8],
                  padding = 8, 
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
                  format = '{MemUsed: .0f}{mm}',
-                 fmt = 'Mem: {}',
+                 fmt = '💾 Mem: {}',
                  ),
         widget.DF(
                  update_interval = 60,
@@ -370,14 +380,33 @@ def init_widgets_list():
                  partition = '/',
                  #format = '[{p}] {uf}{m} ({r:.0f}%)',
                  format = '{uf}{m} free',
-                 fmt = 'Disk: {}',
+                 fmt = '💽 Disk: {}',
                  visible_on_warn = False,
                  ),
+        #  widget.Volume(
+        #           foreground = colors[7],
+        #           padding = 8,
+        #           fmt = '📶 Vol: {}',
+        #           ),
         widget.Volume(
-                 foreground = colors[7],
-                 padding = 8, 
-                 fmt = 'Vol: {}',
-                 ),
+                foreground = colors[7],
+                padding = 8,
+                fmt = '📶 Vol: {}',
+                mouse_callbacks={
+                    "Button1": lambda: qtile.cmd_spawn("pavucontrol"),
+                    "Button3": lambda: qtile.cmd_spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
+                    "Button4": lambda: qtile.cmd_spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%"),
+                    "Button5": lambda: qtile.cmd_spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"),
+                },
+            ),
+
+
+        widget.Net(
+                foreground = "#51afef",
+                format="🌐 {down: .1f} ↓ {up: .1f} ↑",
+                padding=8,
+            ),
+
         widget.Clock(
                  foreground = colors[8],
                  padding = 8, 
@@ -385,10 +414,19 @@ def init_widgets_list():
                  ## Uncomment for date and time 
                  # format = "%a, %b %d - %H:%M",
                  ## Uncomment for time only
-                 format = "%I:%M %p",
+                 format = "📅 %I:%M %p",
                  ),
         widget.Systray(padding = 6),
         widget.Spacer(length = 8),
+        widget.TextBox(
+            text="🇻🇳",
+            fontsize=14,
+            padding=8,
+            mouse_callbacks={
+                "Button1": lambda: qtile.cmd_spawn("ibus-setup")
+            }
+        ),
+
 
         ]
     return widgets_list
@@ -455,6 +493,7 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
+
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
@@ -502,6 +541,28 @@ wl_input_rules = None
 def start_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+@hook.subscribe.client_new
+def move_files_and_images(window):
+    if window.match(Match(wm_class=["brave-browser","firefox","google-chrome"])):
+        window.togroup("2", switch_group=True)
+
+    if window.match(Match(wm_class=[
+        "code","Code","code-oss","VSCodium",
+        "jetbrains-studio","AndroidStudio","android-studio",
+        "arduino","Arduino"
+    ])):
+        window.togroup("6", switch_group=True)
+
+    if window.match(Match(wm_class=["pcmanfm", "Pcmanfm", "nautilus", "Thunar"])):
+        window.togroup("7", switch_group=True)
+
+    if window.match(Match(wm_class=["feh", "eog", "gwenview", "Sxiv", "pavucontrol", "vlc"])):
+        window.togroup("8", switch_group=True)
+
+    if window.match(Match(wm_class=["Evince","evince","Okular","okular","zathura"])):
+        window.togroup("9", switch_group=True)
+
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the

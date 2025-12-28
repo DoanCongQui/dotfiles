@@ -12,6 +12,8 @@ sleep 1
 
 nitrogen --restore &
 
+ibus-daemon -drx &
+
 if  [ ! -d "$HOME"/.cache/betterlockscreen/ ]; then
-    betterlockscreen -u /home/dq/Pictures/image.png & 
+    betterlockscreen -u ~/Pictures/Background/Milkyway_by_mizuno_as.png & 
 fi
