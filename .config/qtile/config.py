@@ -58,6 +58,18 @@ def maximize_by_switching_layout(qtile):
     elif current_layout_name == 'max':
         qtile.current_group.layout = 'monadtall'
 
+@lazy.function
+def move_window_to_screen(qtile, index: int):
+    win = qtile.current_window
+    if not win:
+        return
+    if index >= len(qtile.screens):
+        return
+
+    target_group = qtile.screens[index].group.name
+    win.togroup(target_group, switch_group=True)
+    qtile.focus_screen(index)
+
 keys = [
     # The essentials
     Key([mod], "Return", lazy.spawn(myTerm), desc="Terminal"),
@@ -109,6 +121,18 @@ keys = [
     # Screenshot
     Key([mod, "shift"], "s", lazy.spawn("flameshot gui"), 
         desc="Screenshot selection to clipboard"),
+
+    # Display
+    Key([mod], "End", lazy.to_screen(1), desc="Focus eDP-1"),
+    Key([mod], "Home", lazy.to_screen(0), desc="Focus HDMI-1"),
+
+    # Move focused window to screen (CHẮC CHẮN)
+    #  Key([mod, "shift"], "KP_Home", move_window_to_screen(0)),
+    #  Key([mod, "shift"], "KP_End",  move_window_to_screen(1)),
+
+    # Move window to screen
+    Key([mod, "shift"], "Home", lazy.window.to_screen(0), desc="Move window to HDMI-1"),
+    Key([mod, "shift"], "End", lazy.window.to_screen(1), desc="Move window to eDP-1"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -188,12 +212,13 @@ groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
 # Uncomment only one of the following lines
-group_labels = ["⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", ]
-#group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-#  group_labels = ["DEV", "WWW", "SYS", "DOC", "VBOX", "CHAT", "MUS", "VID", "GFX", "MISC"]
+#  group_labels = ["⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", "⬤", ]
+group_labels = ["一", "二", "三", "四", "五", "六","七", "八", "九", "零", ]
+#  group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+#  group_labels = ["TERM", "WWW", "DEV", "DOC", "VBOX", "CHAT", "MUS", "VID", "GFX", "MISC"]
 
 # The default layout for each of the 10 workspaces
-group_layouts = ["tile", "monadtall", "monadtall", "monadtall", "monadtall", "tile", "monadtall", "monadtall", "monadtall", "monadtall"]
+group_layouts = ["tile", "tile", "tile", "tile", "tile", "tile", "tile", "monadtall", "monadtall", "monadtall"]
 
 for i in range(len(group_names)):
     groups.append(
@@ -225,9 +250,10 @@ for i in groups:
 
 colors = colors.DoomOne
 
-layout_theme = {"border_width": 2,
+layout_theme = {
+                "border_width": 3,
                 "margin": 12,
-                "border_focus": colors[8],
+                "border_focus": "#228B22",
                 "border_normal": colors[0]
                 }
 
@@ -268,7 +294,8 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="Ubuntu Bold",
+    #  font="Ubuntu Bold",
+    font="Roboto Bold",
     fontsize = 12,
     padding = 0,
     background=colors[0]
@@ -280,7 +307,8 @@ def init_widgets_list():
     widgets_list = [
         widget.Spacer(length = 8),
         widget.Image(
-                 filename = "~/.config/qtile/icons/cachyos.svg",
+                 #  filename = "~/.config/qtile/icons/cachyos.svg",
+                 filename = "~/.config/qtile/icons/snorlax.png",
                  scale = "False",
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("qtilekeys-yad")},
                  ),
@@ -290,21 +318,26 @@ def init_widgets_list():
                  foreground = colors[1]
         ),
         widget.GroupBox(
-                 fontsize = 8,
+                 font = "Roboto Bold",
+                 fontsize = 13,
                  margin_y = 5,
                  margin_x = 10,
                  padding_y = 0,
                  padding_x = 2,
-                 borderwidth = 3,
+                 borderwidth = 2,
                  active = colors[8],
                  inactive = colors[9],
                  rounded = False,
                  highlight_color = colors[0],
-                 highlight_method = "line",
-                 this_current_screen_border = colors[7],
-                 this_screen_border = colors [4],
-                 other_current_screen_border = colors[7],
-                 other_screen_border = colors[4],
+                 highlight_method = "broder",
+                 #  highlight_method = "line",
+                 #  highlight_method = "block",
+                 #  this_current_screen_border = colors[7],
+                 #  this_screen_border = colors [4],
+                 #  other_current_screen_border = colors[7],
+                 #  other_screen_border = colors[4],
+                 this_current_screen_border= "#228B22",
+                 other_current_screen_border=colors[4],
                  ),
         widget.TextBox(
                  text = '|',
@@ -315,10 +348,12 @@ def init_widgets_list():
                  ),
         widget.LaunchBar(
                  progs = [("🦁", "brave-browser", "Brave web browser"),
-                          ("🚀", "alacritty", "Alacritty terminal"),
+                          ("", "firefox", "Firefox web browser"),
+                          #  ("🚀", "alacritty", "Alacritty terminal"),
+                          ("", "code", "Vscode"),
                           ("📁", "pcmanfm", "PCManFM file manager"),
-                          ("🔊", "pavucontrol", "Pavucontrol Volume"),
-                          ("🎸", "vlc", "VLC media player")
+                          #  ("🔊", "pavucontrol", "Pavucontrol Volume"),
+                          #  ("🎸", "vlc", "VLC media player")
                          ], 
                  fontsize = 12,
                  padding = 5,
@@ -347,17 +382,14 @@ def init_widgets_list():
                  padding = 8,
                  max_chars = 40
                  ),
-        widget.Image(
-                filename="~/.config/qtile/icons/em.jpg",
-                scale=True,
-                ),
         widget.GenPollText(
                  update_interval = 300,
                  func = lambda: subprocess.check_output("printf $(uname -r)", shell=True, text=True),
                  foreground = colors[3],
                  padding = 8, 
-                 #  fmt = '🐧 {}',
-                 fmt = ' {}',
+                 fmt = '🤖 {}',
+                 #  fmt = '󰕈  {}',
+                 #  fmt = ' {}',
                  ),
         widget.CPU(
                  foreground = colors[4],
@@ -371,6 +403,7 @@ def init_widgets_list():
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
                  format = '{MemUsed: .0f}{mm}',
                  fmt = '💾 Mem: {}',
+                 #  font="Roboto",
                  ),
         widget.DF(
                  update_interval = 60,
@@ -380,7 +413,7 @@ def init_widgets_list():
                  partition = '/',
                  #format = '[{p}] {uf}{m} ({r:.0f}%)',
                  format = '{uf}{m} free',
-                 fmt = '💽 Disk: {}',
+                 fmt = '   Disk: {}',
                  visible_on_warn = False,
                  ),
         #  widget.Volume(
@@ -391,7 +424,7 @@ def init_widgets_list():
         widget.Volume(
                 foreground = colors[7],
                 padding = 8,
-                fmt = '📶 Vol: {}',
+                fmt = '   Vol: {}',
                 mouse_callbacks={
                     "Button1": lambda: qtile.cmd_spawn("pavucontrol"),
                     "Button3": lambda: qtile.cmd_spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
@@ -399,13 +432,21 @@ def init_widgets_list():
                     "Button5": lambda: qtile.cmd_spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"),
                 },
             ),
+        widget.Battery(
+            battery="BAT0",
+            format="o  Power: {percent:2.0%}",
+            show_short_text=False,
+            #  font="Ubuntu Mono",
+            #  fontsize=13,
+            foreground=colors[8],
+            padding=8,
+        ),
 
-
-        widget.Net(
-                foreground = "#51afef",
-                format="🌐 {down: .1f} ↓ {up: .1f} ↑",
-                padding=8,
-            ),
+        #  widget.Net(
+        #          foreground = "#51afef",
+        #          format="🌐 {down: .1f} ↓ {up: .1f} ↑",
+        #          padding=8,
+        #      ),
 
         widget.Clock(
                  foreground = colors[8],
@@ -418,16 +459,18 @@ def init_widgets_list():
                  ),
         widget.Systray(padding = 6),
         widget.Spacer(length = 8),
-        widget.TextBox(
-            text="🇻🇳",
-            fontsize=14,
-            padding=8,
-            mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn("ibus-setup")
-            }
+        #  widget.TextBox(
+        #      text="🇻🇳",
+        #      fontsize=14,
+        #      padding=8,
+        #      mouse_callbacks={
+        #          "Button1": lambda: qtile.cmd_spawn("ibus-setup")
+        #      }
+        #  ),
+        widget.Image(
+                filename="~/.config/qtile/icons/quyen.png",
+                scale=True,
         ),
-
-
         ]
     return widgets_list
 
@@ -503,6 +546,7 @@ floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
+        Match(wm_class="xdg-desktop-portal-gnome"),
         Match(wm_class="confirmreset"),   # gitk
         Match(wm_class="dialog"),         # dialog boxes
         Match(wm_class="download"),       # downloads
@@ -516,6 +560,8 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),    # ssh-askpass
         Match(wm_class="toolbar"),        # toolbars
         Match(wm_class="Yad"),            # yad boxes
+        Match(wm_class="firefox", title="Save File"),
+        Match(wm_class="firefox", title="Opening file"),
         Match(title="branchdialog"),      # gitk
         Match(title='Confirmation'),      # tastyworks exit box
         Match(title='Qalculate!'),        # qalculate-gtk
@@ -542,27 +588,35 @@ def start_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
 
+@hook.subscribe.startup_once
+def disable_sleep():
+    subprocess.Popen(["xset", "s", "off"])
+    subprocess.Popen(["xset", "s", "noblank"])
+    subprocess.Popen(["xset", "-dpms"])
+
 @hook.subscribe.client_new
 def move_files_and_images(window):
-    if window.match(Match(wm_class=["brave-browser","firefox","google-chrome"])):
+    if window.match(Match(wm_class=["brave-browser", "firefox", "google-chrome"])):
         window.togroup("2", switch_group=True)
 
     if window.match(Match(wm_class=[
         "code","Code","code-oss","VSCodium",
         "jetbrains-studio","AndroidStudio","android-studio",
-        "arduino","Arduino"
+        "arduino","Arduino", "vivado", "Vivado"
     ])):
-        window.togroup("6", switch_group=True)
+        window.togroup("3", switch_group=True)
 
-    if window.match(Match(wm_class=["pcmanfm", "Pcmanfm", "nautilus", "Thunar"])):
-        window.togroup("7", switch_group=True)
+    if window.match(Match(wm_class=["pcmanfm", "Pcmanfm", "nautilus", "Nautilus", "Thunar"])):
+        window.togroup("4", switch_group=True)
 
-    if window.match(Match(wm_class=["feh", "eog", "gwenview", "Sxiv", "pavucontrol", "vlc"])):
+    if window.match(Match(wm_class=["Evince","evince","Okular","okular","zathura", "libreoffice", "LibreOffice", "eog"])):
+        window.togroup("4", switch_group=True)
+
+    if window.match(Match(wm_class=["VirtualBox", "virtualbox"])):
+        window.togroup("5", switch_group=True)
+
+    if window.match(Match(wm_class=["feh", "gwenview","Sxiv", "pavucontrol", "vlc"])):
         window.togroup("8", switch_group=True)
-
-    if window.match(Match(wm_class=["Evince","evince","Okular","okular","zathura"])):
-        window.togroup("9", switch_group=True)
-
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
